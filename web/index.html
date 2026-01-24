@@ -21,8 +21,7 @@
     <script>
       const map = new maplibregl.Map({
         container: "map",
-        style:
-          window.MAPLIBRE_STYLE || "https://demotiles.maplibre.org/style.json",
+        style: "{{.MapStyle}}",
         center: [0, 0],
         zoom: 2,
       });
