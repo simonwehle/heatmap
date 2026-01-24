@@ -22,41 +22,74 @@
       const map = new maplibregl.Map({
         container: "map",
         style: "{{.MapStyle}}",
-        center: [0, 0],
-        zoom: 2,
+        center: [10, 50],
+        zoom: 6,
       });
-
-      maplibregl.addProtocol("gpx", VectorTextProtocol.VectorTextProtocol);
 
       map.on("load", async () => {
         try {
-          const response = await fetch("/api/gpx");
-          const gpxFiles = await response.json();
+          const response = await fetch("/api/heatmap");
+          const geojson = await response.json();
 
-          gpxFiles.forEach((file, index) => {
-            const sourceName = file;
-            const link = `gpx://${file}`;
-
-            map.addSource(sourceName, {
-              type: "geojson",
-              data: link,
-            });
-
-            map.addLayer({
-              id: `${sourceName}-line`,
-              type: "line",
-              source: sourceName,
-              paint: {
-                "line-opacity": 0.6,
-                "line-color": "red",
-                "line-width": 2,
-              },
-            });
+          map.addSource("tracks-source", {
+            type: "geojson",
+            data: geojson,
           });
 
-          console.log(`Loaded ${gpxFiles.length} GPX tracks`);
+          map.addLayer({
+            id: "tracks-layer",
+            type: "line",
+            source: "tracks-source",
+            paint: {
+              "line-color": [
+                "interpolate",
+                ["linear"],
+                ["get", "count"],
+                1,
+                "rgba(0, 100, 255, 0.3)",
+                5,
+                "rgba(0, 100, 255, 0.5)",
+                20,
+                "rgba(0, 150, 255, 0.7)",
+                50,
+                "rgba(0, 200, 255, 0.8)",
+                100,
+                "rgb(0, 200, 255)",
+              ],
+              "line-width": [
+                "interpolate",
+                ["linear"],
+                ["get", "count"],
+                1,
+                1,
+                5,
+                2,
+                20,
+                3,
+                50,
+                4,
+                100,
+                6,
+              ],
+              "line-opacity": [
+                "interpolate",
+                ["linear"],
+                ["get", "count"],
+                1,
+                0.3,
+                5,
+                0.5,
+                20,
+                0.7,
+                100,
+                1,
+              ],
+            },
+          });
+
+          console.log(`Loaded heatmap with ${geojson.features.length} tracks`);
         } catch (error) {
-          console.error("Error loading GPX files:", error);
+          console.error("Error loading heatmap:", error);
         }
       });
     </script>
