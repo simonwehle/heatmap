@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"text/template"
 
-	"running-heatmap/internal/files"
-	"running-heatmap/internal/style"
-	"running-heatmap/internal/tiles"
+	"heatmap/internal/files"
+	"heatmap/internal/style"
+	"heatmap/internal/tiles"
 )
 
 func Execute() {
