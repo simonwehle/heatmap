@@ -11,6 +11,6 @@ FROM alpine:latest
 WORKDIR /app
 COPY --from=build /app/main .
 COPY --from=build /app/web ./web
-RUN mkdir -p /app/assets
+RUN mkdir -p /app/activities
 EXPOSE 3465
 CMD ["./main"]

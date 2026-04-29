@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"text/template"
 
-	"heatmap/internal/files"
-	"heatmap/internal/style"
-	"heatmap/internal/tiles"
+	"activity-heatmap/internal/files"
+	"activity-heatmap/internal/style"
+	"activity-heatmap/internal/tiles"
 )
 
 func Execute() {
@@ -26,7 +26,7 @@ func Execute() {
 		tmpl.Execute(w, map[string]string{"MapStyle": mapStyle})
 	})
 
-	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets"))))
+	http.Handle("/activities/", http.StripPrefix("/activities/", http.FileServer(http.Dir("./activities"))))
 	http.Handle("/tiles/", http.StripPrefix("/tiles/", http.FileServer(http.Dir("./tiles"))))
 	http.HandleFunc("/api/gpx", files.ListGPXFiles)
 	http.HandleFunc("/api/heatmap", tiles.GetHeatmapGeoJSON)

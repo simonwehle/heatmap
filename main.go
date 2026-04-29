@@ -1,7 +1,7 @@
 package main
 
 import (
-	"heatmap/internal/cmd"
+	"activity-heatmap/internal/cmd"
 )
 
 func main() {

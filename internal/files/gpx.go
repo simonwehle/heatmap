@@ -9,7 +9,7 @@ import (
 )
 
 func ListGPXFiles(w http.ResponseWriter, r *http.Request) {
-	files, err := os.ReadDir("./assets")
+	files, err := os.ReadDir("./activities")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -18,7 +18,7 @@ func ListGPXFiles(w http.ResponseWriter, r *http.Request) {
 	var gpxFiles []string
 	for _, file := range files {
 		if !file.IsDir() && strings.HasSuffix(strings.ToLower(file.Name()), ".gpx") {
-			gpxFiles = append(gpxFiles, filepath.Join("/assets", file.Name()))
+			gpxFiles = append(gpxFiles, filepath.Join("/activities", file.Name()))
 		}
 	}
 

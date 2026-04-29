@@ -9,7 +9,7 @@ import (
 	"strings"
 	"sync"
 
-	"heatmap/internal/parser"
+	"activity-heatmap/internal/parser"
 )
 
 type GeoJSONFeature struct {
@@ -61,7 +61,7 @@ func Generate() error {
 func extractLineSegments() ([]LineSegment, error) {
 	var allSegments []LineSegment
 
-	files, err := os.ReadDir("./assets")
+	files, err := os.ReadDir("./activities")
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func extractLineSegments() ([]LineSegment, error) {
 			continue
 		}
 
-		filePath := filepath.Join("./assets", file.Name())
+		filePath := filepath.Join("./activities", file.Name())
 		gpx, err := parser.ParseGPXFile(filePath)
 		if err != nil {
 			log.Printf("Warning: skipping %s: %v", file.Name(), err)

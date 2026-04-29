@@ -1,6 +1,6 @@
-# Heatmap
+# Activity Heatmap
 
-Add Files in `/assets` folder
+Add GPX Files in `/activities` folder
 
 ## Starting
 
